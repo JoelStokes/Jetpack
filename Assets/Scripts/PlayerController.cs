@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour {
 	private int fuelAdd = 3;
 	private float maxFlightSpeed = 9;
 
+	//Framerate Fix Variables
+	private float flyTimer = 0;
+	private float flyFuelTime = 0.015f;
+
 	//Death Variables
 	public GameObject Explosion;
 	public GameObject SpawningLight;
@@ -28,11 +32,12 @@ public class PlayerController : MonoBehaviour {
 	private float midY = 0;
 	public bool dead = false;	//Used for outside scripts to see if the player is dead
 	private float lerpSpeed;
-	private const float lerpSpeedCONST = 3f;
-	private float lerpSpeedMult = 1.02f;
+	private const float lerpSpeedCONST = 1.5f;
+	private float lerpSpeedMult = 1.035f;
 	private float lerpStartTime;
 	private float lerpLength;
 	private Vector3 lerpStartPos;
+	private float lerpTimer = 0;
 
 	//Physics Variables
 	private float walkMaxSpeed = 5f;
@@ -40,7 +45,7 @@ public class PlayerController : MonoBehaviour {
 	private float speedDecriment = 1.1f;
 	private float speedDecrimentGround = 1.15f;
 	private float speedAdditive = 1.18f;
-	private float flightForce = 28.5f;
+	private float flightForce = 29.25f;
 	private float gravityScale = 0;	//Original gravity scale, set in Start
 	private const float gravityCap = -40;	//So you don't fall too fast that you go through blocks
 
@@ -62,7 +67,7 @@ public class PlayerController : MonoBehaviour {
 	public Sprite StandingPic;
 	public Sprite Walk1Pic;
 	public Sprite Walk2Pic;
-	private int walkCounter = 0;
+	private float walkTimer = 0;
 	private int walkSprite = 0;	//What number currently on. 0 & 2 = stand, 1 walk1pic, 3 walk2pic.
 
 	public GameObject JetParticleObject;
@@ -153,9 +158,14 @@ public class PlayerController : MonoBehaviour {
 
 			if (grounded) {
 				if (fuel < fuelMax) {
-					fuel += fuelAdd;
-					if (fuel > fuelMax)
-						fuel = fuelMax;
+					flyTimer += Time.deltaTime;
+					if (flyTimer >= flyFuelTime)
+                    {
+						fuel += fuelAdd;
+						flyTimer = 0;
+						if (fuel > fuelMax)
+							fuel = fuelMax;
+					}
 				}
 			}
 
@@ -201,29 +211,34 @@ public class PlayerController : MonoBehaviour {
 
 	void Fly(){
 		if (fuel > 0) {
-			fuel--;
-			rigi.AddForce (new Vector2 (0, flightForce));
+			flyTimer += Time.deltaTime;
+			if (flyTimer >= flyFuelTime)
+            {
+				fuel--;
+				rigi.AddForce(new Vector2(0, flightForce));
+				flyTimer = 0;
+			}
 			jetting = true;
 		}
 	}
 
-	void AnimateWalk(){	//Manage walkAnimation cycle
-		walkCounter++;
+	void AnimateWalk(){ //Manage walkAnimation cycle
+		walkTimer += Time.deltaTime;
 
-		if (((rigi.velocity.x > 8f || rigi.velocity.x < -8f) && walkCounter > 4) || 
-			((rigi.velocity.x > 5f || rigi.velocity.x < -5f) && walkCounter > 7) ||
-			((rigi.velocity.x > 3.5f || rigi.velocity.x < -3.5f) && walkCounter > 9) ||
-			((rigi.velocity.x > 2f || rigi.velocity.x < -2f) && walkCounter > 13) ||
-			((rigi.velocity.x > 1f || rigi.velocity.x < -1f) && walkCounter > 17) ||
-			((rigi.velocity.x > .5f || rigi.velocity.x < -.5f) && walkCounter > 19) ||
-			((rigi.velocity.x > 0.005f && rigi.velocity.x < -0.005f) && walkCounter > 21) && grounded) {
-			walkCounter = 0;
+		if (((rigi.velocity.x > 8f || rigi.velocity.x < -8f) && walkTimer > .067f) || 
+			((rigi.velocity.x > 5f || rigi.velocity.x < -5f) && walkTimer > 0.117f) ||
+			((rigi.velocity.x > 3.5f || rigi.velocity.x < -3.5f) && walkTimer > 0.15f) ||
+			((rigi.velocity.x > 2f || rigi.velocity.x < -2f) && walkTimer > 0.217f) ||
+			((rigi.velocity.x > 1f || rigi.velocity.x < -1f) && walkTimer > 0.283f) ||
+			((rigi.velocity.x > .5f || rigi.velocity.x < -.5f) && walkTimer > 0.317f) ||
+			((rigi.velocity.x > 0.005f && rigi.velocity.x < -0.005f) && walkTimer > 0.35f) && grounded) {
+			walkTimer = 0;
 			walkSprite++;
 
 			ChangeWalkSprite ();
 
 		} else if (!grounded || ((rigi.velocity.x < 0.005f && rigi.velocity.x > -0.005f) && grounded)) {
-			walkCounter = 0;
+			walkTimer = 0;
 
 			if (walkSprite == 1)
 				walkSprite = 2;
@@ -272,7 +287,12 @@ public class PlayerController : MonoBehaviour {
 			rigi.velocity = new Vector2 (0, 0);
 			fuel = fuelMax;
 		}
-		lerpSpeed *= lerpSpeedMult;
+		lerpTimer += Time.deltaTime;
+		if (lerpTimer >= flyFuelTime)
+        {
+			lerpSpeed *= lerpSpeedMult;
+			lerpTimer = 0;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){	
@@ -295,7 +315,7 @@ public class PlayerController : MonoBehaviour {
 			other.GetComponent<Midpoint> ().Activate ();
 		} else if (other.gameObject.tag == "Orb") {	//Midpoint found
 			Collectible collectibleScript = other.GetComponent<Collectible> ();
-			audioSource.PlayOneShot (collectibleScript.pickupSFX, 1f);
+			audioSource.PlayOneShot (collectibleScript.pickupSFX, .5f);
 			collectibleScript.Collected ();
 		} else if (other.gameObject.tag == "SceneChanger") {	//USED FOR ENGLISH BETA!
 			SceneManager.LoadScene ("Title");

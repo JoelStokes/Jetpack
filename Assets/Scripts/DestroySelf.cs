@@ -5,17 +5,24 @@ using UnityEngine;
 public class DestroySelf : MonoBehaviour {
 
 	public int countLimit = 20;
-	private int counter = 0;
-	
-	// Update is called once per frame
-	void Update () {
-		counter++;
-		if (counter >= countLimit - 9) {
+
+	private float timeLimit;
+	private float timeVariation = 9;
+	private float timer = 0;
+
+	private void Start()
+    {
+		timeLimit = (countLimit - timeVariation) / 60;
+    }
+
+    void Update () {
+		timer += Time.deltaTime;
+		if (timer >= timeLimit) {
 			SpriteRenderer colorChanger = GetComponent<SpriteRenderer> ();
-			colorChanger.color = new Vector4 (1,1,1,colorChanger.color.a-.1f);
+			colorChanger.color = new Vector4 (1,1,1,colorChanger.color.a-(Time.deltaTime*timeVariation));
 		}
 
-		if (counter >= countLimit)
+		if (timer >= timeLimit + (timeVariation/60))
 			Destroy (gameObject);
 	}
 }
