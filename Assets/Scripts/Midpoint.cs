@@ -18,7 +18,7 @@ public class Midpoint : MonoBehaviour {
 	void Update () {
 		if (activated && scaleCounter < .3f) {
 			MidGem.transform.localScale = new Vector3 (MidGem.transform.localScale.x, scaleCounter, MidGem.transform.localScale.z);
-			scaleCounter += addAmount;
+			scaleCounter += addAmount * Time.deltaTime * 60;
 		}
 	}
 

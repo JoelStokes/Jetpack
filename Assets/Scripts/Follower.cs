@@ -12,10 +12,10 @@ public class Follower : MonoBehaviour {
 
 	private bool chasing = false;
 	private bool returning = false;
-	private int counter = 0;
+	private float timer = 0;
 
 	private bool deadLimit = false;
-	private int deadCounter = 0;
+	private float deadTimer = 0;
 	private int deadCounterLimit = 120;
 
 	private GameObject Player;
@@ -37,10 +37,10 @@ public class Follower : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (chasing && !returning) {
-			counter++;
-			if (counter >= noiseCounter) {
+			timer += Time.deltaTime;
+			if (timer >= (noiseCounter/60)) {
 				GetComponent<AudioSource> ().PlayOneShot (FollowerSFX, 1);
-				counter = 0;
+				timer = 0;
 			}
 
 			MoveTowards ();
@@ -65,9 +65,9 @@ public class Follower : MonoBehaviour {
 		}
 
 		if (deadLimit) {
-			deadCounter++;
-			if (deadCounter >= deadCounterLimit) {
-				deadCounter = 0;
+			deadTimer += Time.deltaTime;
+			if (deadTimer >= (deadCounterLimit/60)) {
+				deadTimer = 0;
 				deadLimit = false;
 			}
 		}
@@ -93,7 +93,7 @@ public class Follower : MonoBehaviour {
 		if (chasing) {
 			chasing = false;
 			returning = true;
-			counter = 0;
+			timer = 0;
 			brighten = false;
 		}
 	}
@@ -115,7 +115,7 @@ public class Follower : MonoBehaviour {
 		{
 			returning = false;
 			deadLimit = false;
-			deadCounter = 0;
+			deadTimer = 0;
 			transform.position = StartPos;
 		}
 	}

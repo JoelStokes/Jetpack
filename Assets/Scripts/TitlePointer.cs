@@ -20,8 +20,8 @@ public class TitlePointer : MonoBehaviour {
 
 	private bool loading = false;
 
-	private float moveSpeed = .009f;
-	private float moveAdd = .0035f;
+	private float moveSpeed = 0.0001f;
+	private float moveAdd = .0015f;
 	private bool moveDone = false;
 
 	// Use this for initialization
@@ -89,8 +89,8 @@ public class TitlePointer : MonoBehaviour {
 		} else {
 			if (TopBlack.transform.position.y > 4) {
 				moveSpeed += moveAdd;
-				TopBlack.transform.position = new Vector3 (TopBlack.transform.position.x, TopBlack.transform.position.y - moveSpeed, TopBlack.transform.position.z);
-				BottomBlack.transform.position = new Vector3 (BottomBlack.transform.position.x, BottomBlack.transform.position.y + moveSpeed, BottomBlack.transform.position.z);
+				TopBlack.transform.position = new Vector3 (TopBlack.transform.position.x, TopBlack.transform.position.y - (moveSpeed * Time.deltaTime * 60), TopBlack.transform.position.z);
+				BottomBlack.transform.position = new Vector3 (BottomBlack.transform.position.x, BottomBlack.transform.position.y + (moveSpeed * Time.deltaTime * 60), BottomBlack.transform.position.z);
 			
 				MainCamera.GetComponent<AudioSource> ().volume -= .05f;	//Fade out music
 			} else {
