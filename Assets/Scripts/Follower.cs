@@ -52,7 +52,7 @@ public class Follower : MonoBehaviour {
 
 			if (brighten) {
 				if (Lense.color.r < 1)
-					Lense.color = new Vector4 (Lense.color.r + colorChange, Lense.color.g + colorChange, Lense.color.b + colorChange, 1);
+					Lense.color = new Vector4 (Lense.color.r + (colorChange * Time.deltaTime * 60), Lense.color.g + (colorChange * Time.deltaTime * 60), Lense.color.b + (colorChange * Time.deltaTime * 60), 1);
 				else
 					brighten = false;
 			}
@@ -74,7 +74,7 @@ public class Follower : MonoBehaviour {
 
 		if (!brighten) {
 			if (Lense.color.r > 0)
-				Lense.color = new Vector4 (Lense.color.r - colorChange, Lense.color.g - colorChange, Lense.color.b - colorChange, 1);
+				Lense.color = new Vector4 (Lense.color.r - (colorChange * Time.deltaTime * 60), Lense.color.g - (colorChange * Time.deltaTime * 60), Lense.color.b - (colorChange * Time.deltaTime * 60), 1);
 			else
 				brighten = true;
 		}
