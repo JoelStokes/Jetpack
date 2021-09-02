@@ -67,8 +67,14 @@ public class PlayerController : MonoBehaviour {
 	public Sprite StandingPic;
 	public Sprite Walk1Pic;
 	public Sprite Walk2Pic;
+	public Sprite FlyPic;
+	public Sprite FallPic;
 	private float walkTimer = 0;
-	private int walkSprite = 0;	//What number currently on. 0 & 2 = stand, 1 walk1pic, 3 walk2pic.
+	private int walkSprite = 0; //What number currently on. 0 & 2 = stand, 1 walk1pic, 3 walk2pic.
+	private int flySprite = 0;  //What number currently on. 0 is Fly, 1 is inbetween, 2 is fall.
+	private bool flying = false;	//due to how rapidly jetting can change, this will help the animation play properly
+	private float flySpriteTransition = 0;  //Timer used to determine when to switch to fly or fall sprite
+	private float flySpriteLim = .2f;
 
 	public GameObject JetParticleObject;
 	private ParticleSystem jetParticles;
@@ -157,6 +163,11 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			if (grounded) {
+				if (flySprite != 1)
+                {
+					flySprite = 1;
+					PlayerImage.sprite = StandingPic;
+				}
 				if (fuel < fuelMax) {
 					flyTimer += Time.deltaTime;
 					if (flyTimer >= flyFuelTime)
@@ -165,6 +176,23 @@ public class PlayerController : MonoBehaviour {
 						flyTimer = 0;
 						if (fuel > fuelMax)
 							fuel = fuelMax;
+					}
+				}
+			} else if (!jetting)
+			{
+				if (flySprite == 2)
+				{
+					PlayerImage.sprite = FallPic;
+				}
+				else
+				{
+					PlayerImage.sprite = StandingPic;
+					flySpriteTransition += Time.deltaTime;
+					if (flySpriteTransition > flySpriteLim)
+					{
+						PlayerImage.sprite = FallPic;
+						flySprite = 2;
+						flySpriteTransition = 0;
 					}
 				}
 			}
@@ -219,6 +247,22 @@ public class PlayerController : MonoBehaviour {
 				flyTimer = 0;
 			}
 			jetting = true;
+
+			if (flySprite == 0)
+			{
+				PlayerImage.sprite = FlyPic;
+			}
+			else
+			{
+				PlayerImage.sprite = StandingPic;
+				flySpriteTransition += Time.deltaTime;
+				if (flySpriteTransition > flySpriteLim)
+				{
+					PlayerImage.sprite = FlyPic;
+					flySprite = 0;
+					flySpriteTransition = 0;
+				}
+			}
 		}
 	}
 
@@ -253,19 +297,23 @@ public class PlayerController : MonoBehaviour {
 		if (walkSprite > 3)
 			walkSprite = 0;
 
-		switch (walkSprite) {
-		case 0:
-			PlayerImage.sprite = StandingPic;
-			break;
-		case 1: 
-			PlayerImage.sprite = Walk1Pic;
-			break;
-		case 2:
-			PlayerImage.sprite = StandingPic;
-			break;
-		case 3:
-			PlayerImage.sprite = Walk2Pic;
-			break;
+		if (flySprite == 1)
+        {
+			switch (walkSprite)
+			{
+				case 0:
+					PlayerImage.sprite = StandingPic;
+					break;
+				case 1:
+					PlayerImage.sprite = Walk1Pic;
+					break;
+				case 2:
+					PlayerImage.sprite = StandingPic;
+					break;
+				case 3:
+					PlayerImage.sprite = Walk2Pic;
+					break;
+			}
 		}
 	}
 
