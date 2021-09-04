@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//This script is obsolete! Reworked title screen is located in "TitleController.cs". Only use this as a reference!
+
 public class TitlePointer : MonoBehaviour {
 
 	private int cursorPos = 1;
