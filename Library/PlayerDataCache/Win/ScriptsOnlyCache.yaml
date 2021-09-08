@@ -6,7 +6,6 @@ ScriptsOnlyBuild:
     - DestroySelf
     - Follower
     - Fuelbar
-    - Glow
     - LaserBolt
     - LaserShooter
     - LevelStart
@@ -14,6 +13,7 @@ ScriptsOnlyBuild:
     - PlayerController
     - Rotator
     - RotatorTitleLight
+    - TitleController
     - TitlePointer
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
@@ -23,6 +23,17 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -32,6 +43,7 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
     - UnityEngine.UI.Text
     com.unity.multiplayer-hlapi.Runtime.dll:
     - UnityEngine.Networking.NetworkCallbacks
@@ -78,7 +90,13 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 11194}
+    - Class: 114
+      Script: {instanceID: 11216}
+    - Class: 114
       Script: {instanceID: 11242}
+    - Class: 114
+      Script: {instanceID: 11506}
     - Class: 114
       Script: {instanceID: 12244}
     - Class: 114
@@ -96,9 +114,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13148}
     - Class: 114
-      Script: {instanceID: 13602}
+      Script: {instanceID: 13372}
     - Class: 114
-      Script: {instanceID: 13636}
+      Script: {instanceID: 13604}
+    - Class: 114
+      Script: {instanceID: 13638}
+    - Class: 114
+      Script: {instanceID: 13892}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -117,6 +139,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Title.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -131,6 +159,8 @@ ScriptsOnlyBuild:
     - Class: 28
       Script: {instanceID: 0}
     - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
       Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
@@ -150,64 +180,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 11524}
-    - Class: 114
-      Script: {instanceID: 11912}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 124
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 212
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    Assets/Scenes/Volcano.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 23
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 50
-      Script: {instanceID: 0}
-    - Class: 58
-      Script: {instanceID: 0}
-    - Class: 61
-      Script: {instanceID: 0}
-    - Class: 62
-      Script: {instanceID: 0}
-    - Class: 68
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 102
-      Script: {instanceID: 0}
-    - Class: 104
+    - Class: 109
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11192}
@@ -216,31 +189,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11216}
     - Class: 114
-      Script: {instanceID: 11242}
+      Script: {instanceID: 11524}
     - Class: 114
-      Script: {instanceID: 12244}
+      Script: {instanceID: 11912}
     - Class: 114
-      Script: {instanceID: 12372}
+      Script: {instanceID: 12114}
     - Class: 114
-      Script: {instanceID: 12456}
+      Script: {instanceID: 12998}
     - Class: 114
-      Script: {instanceID: 12672}
-    - Class: 114
-      Script: {instanceID: 12822}
-    - Class: 114
-      Script: {instanceID: 13052}
-    - Class: 114
-      Script: {instanceID: 13090}
-    - Class: 114
-      Script: {instanceID: 13148}
+      Script: {instanceID: 13016}
     - Class: 114
       Script: {instanceID: 13372}
     - Class: 114
-      Script: {instanceID: 13602}
+      Script: {instanceID: 13448}
     - Class: 114
-      Script: {instanceID: 13636}
+      Script: {instanceID: 13606}
     - Class: 114
-      Script: {instanceID: 13890}
+      Script: {instanceID: 13892}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -250,10 +215,6 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 198
-      Script: {instanceID: 0}
-    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -910,6 +871,12 @@ ScriptsOnlyBuild:
     className: Switch
   - hash:
       serializedVersion: 2
+      Hash: e60513f480cc65e2018a386b15247854
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TitleController
+  - hash:
+      serializedVersion: 2
       Hash: 20c9a74d659b6895cfdb5f4624ba8daa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -934,7 +901,7 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
-      Hash: f534528b65dd77b18b1d080d40622cf6
+      Hash: 78cc1e515ddc94ec44392a3e03a2d2b0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -1085,6 +1052,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/Title.unity
-  - Assets/Scenes/Volcano.unity
   - Assets/Scenes/Moon.unity
   playerPath: C:/Users/jestokes/Desktop/Jetpack Build Test/Jetpack.exe
