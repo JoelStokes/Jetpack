@@ -140,7 +140,7 @@ public class TitleController : MonoBehaviour
         }
         else
         {
-            LoadText.SetActive(true);
+            //LoadText.SetActive(true); //Removed for WebGL Build since scene loads too quickly!
             SceneManager.LoadScene("Moon");
         }
     }
