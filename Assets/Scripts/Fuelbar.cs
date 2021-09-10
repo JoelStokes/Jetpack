@@ -31,7 +31,7 @@ public class Fuelbar : MonoBehaviour {
 		bar2FullX = Bar2.transform.position.x;
 		bar3FullX = Bar3.transform.position.x;
 
-		transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.09f, 0.06f, 3));
+		transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.095f, 0.06f, 3));
 	}
 
 	// Update is called once per frame

@@ -28,8 +28,8 @@ public class TitleController : MonoBehaviour
     private bool loading = false;
     private bool submenu = false;
 
-    private float moveSpeed = 0.0001f;  //Black Bar movement options
-    private float moveAdd = .0015f;
+    private float moveSpeed = 0.0005f;  //Black Bar movement options
+    private float moveAdd = .0035f;
 
     void Start()
     {
@@ -50,11 +50,17 @@ public class TitleController : MonoBehaviour
             {
                 if (!submenu)
                 {
-                    HandleChoice();
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Default")) //Prevent selection before animation finishes
+                    {
+                        HandleChoice();
+                    }
                 } else
                 {
-                    submenu = false;
-                    animator.SetTrigger("Return");
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("WaitHelp") || animator.GetCurrentAnimatorStateInfo(0).IsName("WaitCredits"))
+                    {
+                        submenu = false;
+                        animator.SetTrigger("Return");
+                    }
                 }
             } else if (!submenu && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)))
             {
@@ -84,7 +90,7 @@ public class TitleController : MonoBehaviour
 
     private void HandleCursorMove()
     {
-        audioSource.PlayOneShot(CursorMove, .5f);
+        audioSource.PlayOneShot(CursorMove, .4f);
         
         if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
         {
@@ -134,7 +140,7 @@ public class TitleController : MonoBehaviour
         }
         else
         {
-            LoadText.SetActive(true);
+            //LoadText.SetActive(true); //Removed for WebGL Build since scene loads too quickly!
             SceneManager.LoadScene("Moon");
         }
     }

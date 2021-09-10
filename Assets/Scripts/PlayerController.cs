@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour {
 	private AudioSource audioSource;
 	public AudioClip RespawnSFX;
 	public AudioClip JetpackSFX;
+	private float sfxTimer = 0;
+	private float sfxLim = .01f;
 
 	//Visual Sprite Variables
 	private SpriteRenderer PlayerImage;
@@ -159,7 +161,20 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKey (KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
 				Fly ();
 				if (fuel > 0)
-					audioSource.PlayOneShot (JetpackSFX, .12f);
+                {
+					if (sfxTimer == 0)
+                    {
+						audioSource.PlayOneShot(JetpackSFX, .18f);
+						sfxTimer += Time.deltaTime;
+					} else
+                    {
+						sfxTimer += Time.deltaTime;
+						if (sfxTimer > sfxLim)
+                        {
+							sfxTimer = 0;
+                        }
+                    }
+				}
 			}
 
 			if (grounded) {
