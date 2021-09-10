@@ -50,11 +50,17 @@ public class TitleController : MonoBehaviour
             {
                 if (!submenu)
                 {
-                    HandleChoice();
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Default")) //Prevent selection before animation finishes
+                    {
+                        HandleChoice();
+                    }
                 } else
                 {
-                    submenu = false;
-                    animator.SetTrigger("Return");
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("WaitHelp") || animator.GetCurrentAnimatorStateInfo(0).IsName("WaitCredits"))
+                    {
+                        submenu = false;
+                        animator.SetTrigger("Return");
+                    }
                 }
             } else if (!submenu && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)))
             {
