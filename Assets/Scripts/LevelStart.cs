@@ -15,8 +15,8 @@ public class LevelStart : MonoBehaviour {
 	public string topText;
 	public string bottomText;
 
-	private float moveSpeed = 0.0001f;
-	private float moveAdd = .0015f;
+	private float moveSpeed = 0.0005f;
+	private float moveAdd = .0035f;
 	private bool moveDone = false;
 
 	private float timer = 0;
